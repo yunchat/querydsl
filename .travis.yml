@@ -6,6 +6,8 @@ services:
 addons:
   postgresql: "9.3"
 env:
+  global:
+    - JAVA_TOOL_OPTIONS="-XX:ReservedCodeCacheSize=150m -XX:+UseCodeCacheFlushing -XX:-DontCompileHugeMethods"
   matrix:
     - MODULE=!querydsl-scala
     - MODULE=querydsl-scala
