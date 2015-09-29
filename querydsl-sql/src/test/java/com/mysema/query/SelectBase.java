@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 
 import org.joda.time.DateTime;
@@ -529,6 +530,9 @@ public class SelectBase extends AbstractBaseTest {
             int diff3 = query2.singleResult(SQLExpressions.datediff(dp, employee.datefield, employee2.datefield));
             assertEquals(diff1, -diff2);
         }
+
+        Timestamp timestamp = new Timestamp(new java.util.Date().getTime());
+        query.singleResult(SQLExpressions.datediff(DatePart.minute, Expressions.currentTimestamp(), timestamp));
     }
 
     @Test
