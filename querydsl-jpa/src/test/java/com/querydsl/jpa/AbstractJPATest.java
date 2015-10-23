@@ -838,7 +838,6 @@ public abstract class AbstractJPATest {
     }
 
     @Test
-    @Ignore // FIXME
     public void GroupBy_Count() {
         List<Integer> ids = query().from(cat).groupBy(cat.id).select(cat.id).fetch();
         long count = query().from(cat).groupBy(cat.id).fetchCount();
@@ -848,12 +847,25 @@ public abstract class AbstractJPATest {
         long catCount = query().from(cat).fetchCount();
         assertEquals(catCount, ids.size());
         assertEquals(catCount, count);
-        assertEquals(catCount, results.getResults().size());
+        assertEquals(1, results.getResults().size());
         assertEquals(catCount, results.getTotal());
     }
 
     @Test
-    @Ignore // FIXME
+    public void GroupBy_Having_Count() {
+        List<Integer> ids = query().from(cat).groupBy(cat.id).having(cat.id.loe(2)).select(cat.id).fetch();
+        long count = query().from(cat).groupBy(cat.id).having(cat.id.loe(2)).fetchCount();
+        QueryResults<Integer> results = query().from(cat).groupBy(cat.id).having(cat.id.loe(2))
+                .limit(1).select(cat.id).fetchResults();
+
+        assertEquals(2, ids.size());
+        assertEquals(2, count);
+        assertEquals(1, results.getResults().size());
+        assertEquals(2, results.getTotal());
+    }
+
+
+    @Test
     public void GroupBy_Distinct_Count() {
         List<Integer> ids = query().from(cat).groupBy(cat.id).distinct().select(Expressions.ONE).fetch();
         QueryResults<Integer> results = query().from(cat).groupBy(cat.id)
@@ -861,7 +873,7 @@ public abstract class AbstractJPATest {
 
         assertEquals(1, ids.size());
         assertEquals(1, results.getResults().size());
-        assertEquals(1, results.getTotal());
+        assertEquals(6, results.getTotal());
     }
 
     @Test
