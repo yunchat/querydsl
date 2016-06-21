@@ -1699,6 +1699,7 @@ public class SelectBase extends AbstractBaseTest {
         assertEquals(Integer.valueOf(0), firstResult(str.locate("a", 4)));
         assertEquals(Integer.valueOf(4), firstResult(str.locate("b", 2)));
         assertEquals("  abcd",           firstResult(StringExpressions.rtrim(str)));
+        assertEquals("abc",              firstResult(str.substring(2, 5)));
     }
 
     @Test
